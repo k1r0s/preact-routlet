@@ -3,7 +3,6 @@ import Path from 'path-parser';
 
 const ROUTE_LISTENER_POOL = [];
 let FIRST_COMPONENT_HAS_MOUNTED = false;
-const navigate = newUrl => location.hash = "#" + newUrl;
 const gotoDefault = _ => {
   if(!FIRST_COMPONENT_HAS_MOUNTED) {
     setTimeout(navigate, 1, "/");
@@ -20,6 +19,8 @@ export function renderOnRoute(path) {
     return fun;
   }
 }
+
+export const navigate = newUrl => location.hash = "#" + newUrl;
 
 export class PathLookup extends Component {
 

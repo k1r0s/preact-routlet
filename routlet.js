@@ -191,9 +191,6 @@ var possibleConstructorReturn = function (self, call) {
 
 var ROUTE_LISTENER_POOL = [];
 var FIRST_COMPONENT_HAS_MOUNTED = false;
-var navigate = function navigate(newUrl) {
-  return location.hash = "#" + newUrl;
-};
 var gotoDefault = function gotoDefault(_) {
   if (!FIRST_COMPONENT_HAS_MOUNTED) {
     setTimeout(navigate, 1, "/");
@@ -210,6 +207,10 @@ function renderOnRoute(path) {
     return fun;
   };
 }
+
+var navigate = function navigate(newUrl) {
+  return location.hash = "#" + newUrl;
+};
 
 var PathLookup = function (_Component) {
   inherits(PathLookup, _Component);
@@ -314,6 +315,7 @@ var Link = function Link(props) {
 };
 
 exports.renderOnRoute = renderOnRoute;
+exports.navigate = navigate;
 exports.PathLookup = PathLookup;
 exports.RouterOutlet = RouterOutlet;
 exports.Link = Link;
