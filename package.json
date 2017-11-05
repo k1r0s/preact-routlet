@@ -1,0 +1,23 @@
+{
+  "name": "preact-routlet",
+  "version": "0.0.1",
+  "description": "simple preact hash routing",
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "main": "routlet.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2"
+  },
+  "dependencies": {
+    "path-parser": "^2.0.2",
+    "preact": "^8.2.6"
+  }
+}
