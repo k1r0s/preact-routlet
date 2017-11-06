@@ -222,6 +222,10 @@ var gotoDefault = function gotoDefault(_) {
   }
 };
 
+var transformHash = function transformHash(rawHash) {
+  return rawHash.split("#").pop();
+};
+
 function renderOnRoute(path) {
   return function (fun) {
     ROUTE_LISTENER_POOL.push({
@@ -248,7 +252,7 @@ var PathLookup = function (_Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       gotoDefault();
-      this.setState({ path: location.hash || "/" });
+      this.setState({ path: location.hash ? transformHash(location.hash) : "/" });
     }
   }, {
     key: "componentDidMount",
@@ -256,8 +260,7 @@ var PathLookup = function (_Component) {
       var _this2 = this;
 
       window.addEventListener("hashchange", function (_ref) {
-        var newURL = _ref.newURL;
-        return _this2.hashChange(newURL.split("#").pop());
+        return _this2.hashChange(transformHash);
       });
     }
   }, {

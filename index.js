@@ -10,6 +10,8 @@ const gotoDefault = _ => {
   }
 }
 
+const transformHash = rawHash => rawHash.split("#").pop();
+
 export function renderOnRoute(path) {
   return function(fun) {
     ROUTE_LISTENER_POOL.push({
@@ -26,12 +28,12 @@ export class PathLookup extends Component {
 
   componentWillMount() {
     gotoDefault();
-    this.setState({ path: location.hash || "/" });
+    this.setState({ path: location.hash ? transformHash(location.hash): "/" });
   }
 
   componentDidMount() {
     window.addEventListener("hashchange", ({ newURL }) =>
-      this.hashChange(newURL.split("#").pop()));
+      this.hashChange(transformHash));
   }
 
   hashChange(selectedRoute) {
