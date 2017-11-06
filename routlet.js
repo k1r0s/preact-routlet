@@ -247,7 +247,8 @@ var PathLookup = function (_Component) {
   createClass(PathLookup, [{
     key: "componentWillMount",
     value: function componentWillMount() {
-      this.setState({ path: "/" });
+      gotoDefault();
+      this.setState({ path: location.hash || "/" });
     }
   }, {
     key: "componentDidMount",
@@ -258,7 +259,6 @@ var PathLookup = function (_Component) {
         var newURL = _ref.newURL;
         return _this2.hashChange(newURL.split("#").pop());
       });
-      gotoDefault();
     }
   }, {
     key: "hashChange",

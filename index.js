@@ -25,13 +25,13 @@ export const navigate = newUrl => location.hash = "#" + newUrl;
 export class PathLookup extends Component {
 
   componentWillMount() {
-    this.setState({ path: "/" });
+    gotoDefault();
+    this.setState({ path: location.hash || "/" });
   }
 
   componentDidMount() {
     window.addEventListener("hashchange", ({ newURL }) =>
       this.hashChange(newURL.split("#").pop()));
-    gotoDefault();
   }
 
   hashChange(selectedRoute) {
