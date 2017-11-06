@@ -216,8 +216,8 @@ var possibleConstructorReturn = function (self, call) {
 var ROUTE_LISTENER_POOL = [];
 var FIRST_COMPONENT_HAS_MOUNTED = false;
 var gotoDefault = function gotoDefault(_) {
-  if (!FIRST_COMPONENT_HAS_MOUNTED && !location.hash) {
-    setTimeout(navigate, 1, "/");
+  if (!FIRST_COMPONENT_HAS_MOUNTED) {
+    if (!location.hash) setTimeout(navigate, 1, "/");
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
 };
@@ -252,7 +252,12 @@ var PathLookup = function (_Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       gotoDefault();
-      this.setState({ path: location.hash ? transformHash(location.hash) : "/" });
+      this.setState({
+        params: null,
+        path: location.hash ? transformHash(location.hash) : "/",
+        current: null
+      });
+      this.hashChange(this.state.path);
     }
   }, {
     key: "componentDidMount",
@@ -290,15 +295,6 @@ var RouterOutlet = function (_PathLookup) {
   }
 
   createClass(RouterOutlet, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      this.setState({
-        params: null,
-        path: "/",
-        current: null
-      });
-    }
-  }, {
     key: "hashChange",
     value: function hashChange(selectedRoute) {
       var selectedMatcher = ROUTE_LISTENER_POOL.find(function (matcher) {

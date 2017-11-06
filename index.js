@@ -4,8 +4,8 @@ import Path from 'path-parser';
 const ROUTE_LISTENER_POOL = [];
 let FIRST_COMPONENT_HAS_MOUNTED = false;
 const gotoDefault = _ => {
-  if(!FIRST_COMPONENT_HAS_MOUNTED && !location.hash) {
-    setTimeout(navigate, 1, "/");
+  if(!FIRST_COMPONENT_HAS_MOUNTED) {
+    if(!location.hash) setTimeout(navigate, 1, "/");
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
 }
@@ -28,7 +28,12 @@ export class PathLookup extends Component {
 
   componentWillMount() {
     gotoDefault();
-    this.setState({ path: location.hash ? transformHash(location.hash): "/" });
+    this.setState({
+      params: null,
+      path: location.hash ? transformHash(location.hash): "/",
+      current: null
+    });
+    this.hashChange(this.state.path);
   }
 
   componentDidMount() {
@@ -46,14 +51,6 @@ export class PathLookup extends Component {
 }
 
 export class RouterOutlet extends PathLookup {
-
-  componentWillMount() {
-    this.setState({
-      params: null,
-      path: "/",
-      current: null
-    });
-	}
 
   hashChange(selectedRoute) {
     const selectedMatcher = ROUTE_LISTENER_POOL.find(matcher => !!matcher.parser.test(selectedRoute));
