@@ -265,7 +265,8 @@ var PathLookup = function (_Component) {
       var _this2 = this;
 
       window.addEventListener("hashchange", function (_ref) {
-        return _this2.hashChange(transformHash);
+        var newURL = _ref.newURL;
+        return _this2.hashChange(transformHash(newURL));
       });
     }
   }, {
