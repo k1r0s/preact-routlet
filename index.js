@@ -14,7 +14,7 @@ export function renderOnRoute(path) {
   return function(fun) {
     ROUTE_LISTENER_POOL.push({
       parser: new Path(path),
-      comp: new fun
+      comp: fun
     });
     return fun;
   }
@@ -63,7 +63,7 @@ export class RouterOutlet extends PathLookup {
   }
 
   render({ children, shouldRedirect = _ => false, redirect }, { current, params, path }) {
-    const result = current ? current.render({ params, path }): children[0];
+    const result = current ? h(current, { params, path }): children[0];
 
     if(shouldRedirect(path) && current) {
       navigate(redirect);

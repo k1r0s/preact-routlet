@@ -202,7 +202,7 @@ function renderOnRoute(path) {
   return function (fun) {
     ROUTE_LISTENER_POOL.push({
       parser: new Path(path),
-      comp: new fun()
+      comp: fun
     });
     return fun;
   };
@@ -296,7 +296,7 @@ var RouterOutlet = function (_PathLookup) {
           params = _ref5.params,
           path = _ref5.path;
 
-      var result = current ? current.render({ params: params, path: path }) : children[0];
+      var result = current ? preact.h(current, { params: params, path: path }) : children[0];
 
       if (shouldRedirect(path) && current) {
         navigate(redirect);
