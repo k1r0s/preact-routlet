@@ -153,6 +153,20 @@ var createClass = function () {
 
 
 
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
 
 
 var inherits = function (subClass, superClass) {
@@ -179,7 +193,17 @@ var inherits = function (subClass, superClass) {
 
 
 
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
 
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
 
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
@@ -192,7 +216,7 @@ var possibleConstructorReturn = function (self, call) {
 var ROUTE_LISTENER_POOL = [];
 var FIRST_COMPONENT_HAS_MOUNTED = false;
 var gotoDefault = function gotoDefault(_) {
-  if (!FIRST_COMPONENT_HAS_MOUNTED) {
+  if (!FIRST_COMPONENT_HAS_MOUNTED && !location.hash) {
     setTimeout(navigate, 1, "/");
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
@@ -309,9 +333,11 @@ var RouterOutlet = function (_PathLookup) {
   return RouterOutlet;
 }(PathLookup);
 
-var Link = function Link(props) {
-  props["href"] = "#" + props.href;
-  return preact.h("a", props, props.children);
+var Link = function Link(_ref6) {
+  var href = _ref6.href,
+      children = _ref6.children,
+      props = objectWithoutProperties(_ref6, ["href", "children"]);
+  return preact.h("a", _extends({ href: "#" + href }, props), children);
 };
 
 exports.renderOnRoute = renderOnRoute;

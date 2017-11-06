@@ -4,7 +4,7 @@ import Path from 'path-parser';
 const ROUTE_LISTENER_POOL = [];
 let FIRST_COMPONENT_HAS_MOUNTED = false;
 const gotoDefault = _ => {
-  if(!FIRST_COMPONENT_HAS_MOUNTED) {
+  if(!FIRST_COMPONENT_HAS_MOUNTED && !location.hash) {
     setTimeout(navigate, 1, "/");
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
@@ -74,7 +74,5 @@ export class RouterOutlet extends PathLookup {
   }
 }
 
-export const Link = props => {
-  props["href"] = "#" + props.href;
-  return h("a", props, props.children);
-};
+export const Link = ({ href, children, ...props }) =>
+  h("a", { href: `#${href}`, ...props }, children);
