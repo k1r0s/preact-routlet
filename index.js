@@ -1,7 +1,8 @@
 import { h, Component } from "preact";
 import Path from 'path-parser';
 
-const ROUTE_LISTENER_POOL = [];
+export const routePool = [];
+
 let FIRST_COMPONENT_HAS_MOUNTED = false;
 const gotoDefault = _ => {
   if(!FIRST_COMPONENT_HAS_MOUNTED) {
@@ -13,12 +14,13 @@ const gotoDefault = _ => {
 const transformHash = rawHash => rawHash.split("#").pop();
 
 export function renderOnRoute(path) {
-  return function(fun) {
-    ROUTE_LISTENER_POOL.push({
+  return function(comp) {
+    routePool.push({
+      path,
       parser: new Path(path),
-      comp: fun
+      comp,
     });
-    return fun;
+    return comp;
   }
 }
 
@@ -53,7 +55,7 @@ export class PathLookup extends Component {
 export class RouterOutlet extends PathLookup {
 
   hashChange(selectedRoute) {
-    const selectedMatcher = ROUTE_LISTENER_POOL.find(matcher => !!matcher.parser.test(selectedRoute));
+    const selectedMatcher = routePool.find(matcher => !!matcher.parser.test(selectedRoute));
     this.setState({
       "params": selectedMatcher ? selectedMatcher.parser.test(selectedRoute): null,
       "path": selectedRoute,

@@ -213,7 +213,8 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-var ROUTE_LISTENER_POOL = [];
+var routePool = [];
+
 var FIRST_COMPONENT_HAS_MOUNTED = false;
 var gotoDefault = function gotoDefault(_) {
   if (!FIRST_COMPONENT_HAS_MOUNTED) {
@@ -227,12 +228,13 @@ var transformHash = function transformHash(rawHash) {
 };
 
 function renderOnRoute(path) {
-  return function (fun) {
-    ROUTE_LISTENER_POOL.push({
+  return function (comp) {
+    routePool.push({
+      path: path,
       parser: new Path(path),
-      comp: fun
+      comp: comp
     });
-    return fun;
+    return comp;
   };
 }
 
@@ -298,7 +300,7 @@ var RouterOutlet = function (_PathLookup) {
   createClass(RouterOutlet, [{
     key: "hashChange",
     value: function hashChange(selectedRoute) {
-      var selectedMatcher = ROUTE_LISTENER_POOL.find(function (matcher) {
+      var selectedMatcher = routePool.find(function (matcher) {
         return !!matcher.parser.test(selectedRoute);
       });
       this.setState({
@@ -340,6 +342,7 @@ var Link = function Link(_ref6) {
   return preact.h("a", _extends({ href: "#" + href }, props), children);
 };
 
+exports.routePool = routePool;
 exports.renderOnRoute = renderOnRoute;
 exports.navigate = navigate;
 exports.PathLookup = PathLookup;
