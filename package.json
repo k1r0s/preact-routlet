@@ -1,6 +1,6 @@
 {
   "name": "preact-routlet",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "simple preact hash routing",
   "scripts": {
     "build": "rollup -c rollup.config.js"
