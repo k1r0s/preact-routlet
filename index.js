@@ -40,7 +40,7 @@ export class PathLookup extends Component {
 
   componentDidMount() {
     window.addEventListener("hashchange", ({ newURL }) =>
-      this.hashChange(transformHash(newURL)));
+      this.hashChange(transformHash(newURL || location.hash)));
   }
 
   hashChange(selectedRoute) {
