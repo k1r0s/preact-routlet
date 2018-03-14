@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('preact'), require('path-parser')) :
 	typeof define === 'function' && define.amd ? define(['exports', 'preact', 'path-parser'], factory) :
-	(factory((global.routlet = {}),global.preact,global.Path));
+	(factory((global.routletPreact = {}),global.preact,global.Path));
 }(this, (function (exports,preact,Path) { 'use strict';
 
 Path = Path && Path.hasOwnProperty('default') ? Path['default'] : Path;
@@ -246,19 +246,27 @@ var PathLookup = function (_Component) {
   inherits(PathLookup, _Component);
 
   function PathLookup() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
     classCallCheck(this, PathLookup);
-    return possibleConstructorReturn(this, (PathLookup.__proto__ || Object.getPrototypeOf(PathLookup)).apply(this, arguments));
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_ref = PathLookup.__proto__ || Object.getPrototypeOf(PathLookup)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      params: null,
+      path: location.hash ? transformHash(location.hash) : "/",
+      current: null
+    }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
   }
 
   createClass(PathLookup, [{
     key: "componentWillMount",
     value: function componentWillMount() {
       gotoDefault();
-      this.setState({
-        params: null,
-        path: location.hash ? transformHash(location.hash) : "/",
-        current: null
-      });
       this.hashChange(this.state.path);
     }
   }, {
@@ -266,8 +274,8 @@ var PathLookup = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      window.addEventListener("hashchange", function (_ref) {
-        var newURL = _ref.newURL;
+      window.addEventListener("hashchange", function (_ref2) {
+        var newURL = _ref2.newURL;
         return _this2.hashChange(transformHash(newURL || location.hash));
       });
     }
@@ -278,10 +286,10 @@ var PathLookup = function (_Component) {
     }
   }, {
     key: "render",
-    value: function render(_ref2, _ref3) {
-      var shouldRender = _ref2.shouldRender,
-          children = _ref2.children;
-      var path = _ref3.path;
+    value: function render(_ref3, _ref4) {
+      var shouldRender = _ref3.shouldRender,
+          children = _ref3.children;
+      var path = _ref4.path;
 
       return shouldRender(path) ? children[0] : null;
     }
@@ -311,16 +319,16 @@ var RouterOutlet = function (_PathLookup) {
     }
   }, {
     key: "render",
-    value: function render(_ref4, _ref5) {
-      var children = _ref4.children,
-          _ref4$shouldRedirect = _ref4.shouldRedirect,
-          shouldRedirect = _ref4$shouldRedirect === undefined ? function (_) {
+    value: function render(_ref5, _ref6) {
+      var children = _ref5.children,
+          _ref5$shouldRedirect = _ref5.shouldRedirect,
+          shouldRedirect = _ref5$shouldRedirect === undefined ? function (_) {
         return false;
-      } : _ref4$shouldRedirect,
-          redirect = _ref4.redirect;
-      var current = _ref5.current,
-          params = _ref5.params,
-          path = _ref5.path;
+      } : _ref5$shouldRedirect,
+          redirect = _ref5.redirect;
+      var current = _ref6.current,
+          params = _ref6.params,
+          path = _ref6.path;
 
       var result = current ? preact.h(current, { params: params, path: path }) : children[0];
 
@@ -335,10 +343,10 @@ var RouterOutlet = function (_PathLookup) {
   return RouterOutlet;
 }(PathLookup);
 
-var Link = function Link(_ref6) {
-  var href = _ref6.href,
-      children = _ref6.children,
-      props = objectWithoutProperties(_ref6, ["href", "children"]);
+var Link = function Link(_ref7) {
+  var href = _ref7.href,
+      children = _ref7.children,
+      props = objectWithoutProperties(_ref7, ["href", "children"]);
   return preact.h("a", _extends({ href: "#" + href }, props), children);
 };
 

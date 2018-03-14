@@ -28,13 +28,14 @@ export const navigate = newUrl => location.hash = "#" + newUrl;
 
 export class PathLookup extends Component {
 
+  state = {
+    params: null,
+    path: location.hash ? transformHash(location.hash): "/",
+    current: null
+  }
+
   componentWillMount() {
     gotoDefault();
-    this.setState({
-      params: null,
-      path: location.hash ? transformHash(location.hash): "/",
-      current: null
-    });
     this.hashChange(this.state.path);
   }
 

@@ -1,11 +1,6 @@
 import babel from 'rollup-plugin-babel';
 
-export default {
-  input: `index.js`,
-  output: [
-		{ file: 'routlet.js', name: 'routlet', format: 'umd' },
-  ],
-  plugins: [
+export default [
     babel({
       exclude: 'node_modules/**',
       "presets": [
@@ -18,8 +13,8 @@ export default {
       ],
       "plugins": [
         "external-helpers",
-        "transform-object-rest-spread"
+        "transform-object-rest-spread",
+        "transform-class-properties"
       ]
     })
   ]
-}
