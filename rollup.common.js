@@ -12,9 +12,7 @@ export default [
         ]
       ],
       "plugins": [
-        "external-helpers",
-        "transform-object-rest-spread",
-        "transform-class-properties"
+        "transform-object-rest-spread"
       ]
     })
   ]

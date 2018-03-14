@@ -6,212 +6,17 @@
 
 Path = Path && Path.hasOwnProperty('default') ? Path['default'] : Path;
 
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-  function AsyncGenerator(gen) {
-    var front, back;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-
-
-
-
-
-
-
-
-var objectWithoutProperties = function (obj, keys) {
-  var target = {};
-
-  for (var i in obj) {
-    if (keys.indexOf(i) >= 0) continue;
-    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
-    target[i] = obj[i];
-  }
-
-  return target;
-};
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var routePool = [];
 
@@ -243,39 +48,33 @@ var navigate = function navigate(newUrl) {
 };
 
 var PathLookup = function (_Component) {
-  inherits(PathLookup, _Component);
+  _inherits(PathLookup, _Component);
 
   function PathLookup() {
-    var _ref;
+    _classCallCheck(this, PathLookup);
 
-    var _temp, _this, _ret;
-
-    classCallCheck(this, PathLookup);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_ref = PathLookup.__proto__ || Object.getPrototypeOf(PathLookup)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      params: null,
-      path: location.hash ? transformHash(location.hash) : "/",
-      current: null
-    }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (PathLookup.__proto__ || Object.getPrototypeOf(PathLookup)).apply(this, arguments));
   }
 
-  createClass(PathLookup, [{
+  _createClass(PathLookup, [{
     key: "componentWillMount",
     value: function componentWillMount() {
       gotoDefault();
-      this.hashChange(this.state.path);
+      var path = location.hash ? transformHash(location.hash) : "/";
+      this.setState({
+        params: null,
+        path: path,
+        current: null
+      });
+      this.hashChange(path);
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
-      window.addEventListener("hashchange", function (_ref2) {
-        var newURL = _ref2.newURL;
+      window.addEventListener("hashchange", function (_ref) {
+        var newURL = _ref.newURL;
         return _this2.hashChange(transformHash(newURL || location.hash));
       });
     }
@@ -286,26 +85,28 @@ var PathLookup = function (_Component) {
     }
   }, {
     key: "render",
-    value: function render(_ref3, _ref4) {
-      var shouldRender = _ref3.shouldRender,
-          children = _ref3.children;
-      var path = _ref4.path;
+    value: function render(_ref2, _ref3) {
+      var shouldRender = _ref2.shouldRender,
+          children = _ref2.children;
+      var path = _ref3.path;
 
       return shouldRender(path) ? children[0] : null;
     }
   }]);
+
   return PathLookup;
 }(preact.Component);
 
 var RouterOutlet = function (_PathLookup) {
-  inherits(RouterOutlet, _PathLookup);
+  _inherits(RouterOutlet, _PathLookup);
 
   function RouterOutlet() {
-    classCallCheck(this, RouterOutlet);
-    return possibleConstructorReturn(this, (RouterOutlet.__proto__ || Object.getPrototypeOf(RouterOutlet)).apply(this, arguments));
+    _classCallCheck(this, RouterOutlet);
+
+    return _possibleConstructorReturn(this, (RouterOutlet.__proto__ || Object.getPrototypeOf(RouterOutlet)).apply(this, arguments));
   }
 
-  createClass(RouterOutlet, [{
+  _createClass(RouterOutlet, [{
     key: "hashChange",
     value: function hashChange(selectedRoute) {
       var selectedMatcher = routePool.find(function (matcher) {
@@ -319,16 +120,16 @@ var RouterOutlet = function (_PathLookup) {
     }
   }, {
     key: "render",
-    value: function render(_ref5, _ref6) {
-      var children = _ref5.children,
-          _ref5$shouldRedirect = _ref5.shouldRedirect,
-          shouldRedirect = _ref5$shouldRedirect === undefined ? function (_) {
+    value: function render(_ref4, _ref5) {
+      var children = _ref4.children,
+          _ref4$shouldRedirect = _ref4.shouldRedirect,
+          shouldRedirect = _ref4$shouldRedirect === undefined ? function (_) {
         return false;
-      } : _ref5$shouldRedirect,
-          redirect = _ref5.redirect;
-      var current = _ref6.current,
-          params = _ref6.params,
-          path = _ref6.path;
+      } : _ref4$shouldRedirect,
+          redirect = _ref4.redirect;
+      var current = _ref5.current,
+          params = _ref5.params,
+          path = _ref5.path;
 
       var result = current ? preact.h(current, { params: params, path: path }) : children[0];
 
@@ -340,13 +141,15 @@ var RouterOutlet = function (_PathLookup) {
       return result;
     }
   }]);
+
   return RouterOutlet;
 }(PathLookup);
 
-var Link = function Link(_ref7) {
-  var href = _ref7.href,
-      children = _ref7.children,
-      props = objectWithoutProperties(_ref7, ["href", "children"]);
+var Link = function Link(_ref6) {
+  var href = _ref6.href,
+      children = _ref6.children,
+      props = _objectWithoutProperties(_ref6, ["href", "children"]);
+
   return preact.h("a", _extends({ href: "#" + href }, props), children);
 };
 
