@@ -7,13 +7,12 @@
     "build:react": "rollup -c rollup.config.react.js",
     "build:preact": "rollup -c rollup.config.preact.js"
   },
-  "main": "routlet.js",
+  "main": "preact.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "rollup": "^0.50.0",
