@@ -1,6 +1,6 @@
 ### Preact Routlet
 
-This package contains routing functionalities for [preact](https://github.com/developit/preact) and, now from 0.3.0 `React` applications as well. Instead of using HTML5 history API it uses the oldie `/#/what-ever` hash routing (this will change in the future).
+This package contains routing functionalities for [preact](https://github.com/developit/preact) and, now from 1.0.0 `React` applications as well. Instead of using HTML5 history API it uses the oldie `/#/what-ever` hash routing (this will change in the future).
 
 This project was created by exploring contextual ways to define routes rather than placing all the routes in a single file.
 
