@@ -107,3 +107,26 @@ So basically you're registering all the components that listen to route changes 
 ```html
     <RouterOutlet redirect="/login" shouldRedirect={path => requireLogin(path) && !AuthService.isLogged()} />
 ```
+- Lazy loading, Module splitting
+
+By default routes are only loaded if you evaluate classes that contain `@renderOnRoute` decorator, so simply by importing it. But you need the plugin `syntax-dynamic-import` to dynamically use the import() function with Babel.
+
+```javascript
+...
+} else if (User.isAdmin(userSnapshot)) {
+ import('../admin'); //load admin module
+}
+```
+
+```javascript
+// admin/index.js
+...
+import { navigate } from 'preact-routlet/react'; // import navigate function
+
+import './dashboard'; //load component with @renderOnRoute
+import './user-list'; //load component with @renderOnRoute
+
+navigate('/admin-board'); //navigate to this module once routes are loaded
+```
+
+By using `@renderOnRoute` you're adding the evaluated component to the route pool
