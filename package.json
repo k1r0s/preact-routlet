@@ -1,6 +1,6 @@
 {
   "name": "preact-routlet",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "simple preact hash routing",
   "scripts": {
     "build": "npm run build:react ; npm run build:preact",
