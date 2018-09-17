@@ -19,7 +19,8 @@
     "rollup-plugin-babel": "^3.0.2"
   },
   "dependencies": {
-    "path-parser": "^2.0.2"
+    "path-parser": "^2.0.2",
+    "react": "^16.5.1"
   },
   "peerDependencies": {
     "preact": "^8.2.6",

@@ -3,10 +3,18 @@ import Path from 'path-parser';
 
 export const routePool = [];
 
+let defaultPath = "/";
+
+export const getPath = () => transformHash(location.hash);
+
+export const setDefault = path => defaultPath = path;
+
+export const refresh = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
+
 let FIRST_COMPONENT_HAS_MOUNTED = false;
 const gotoDefault = _ => {
   if(!FIRST_COMPONENT_HAS_MOUNTED) {
-    if(!location.hash) setTimeout(navigate, 1, "/");
+    if(!location.hash) setTimeout(navigate, 1, defaultPath);
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
 }
@@ -30,7 +38,7 @@ export class PathLookup extends React.Component {
 
   componentWillMount() {
     gotoDefault();
-    const path = location.hash ? transformHash(location.hash): "/";
+    const path = location.hash ? transformHash(location.hash): defaultPath;
     this.setState({
       params: null,
       path,

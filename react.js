@@ -21,10 +21,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var routePool = [];
 
+var defaultPath = "/";
+
+var getPath = function getPath() {
+  return transformHash(location.hash);
+};
+
+var setDefault = function setDefault(path) {
+  return defaultPath = path;
+};
+
+var refresh = function refresh() {
+  return window.dispatchEvent(new HashChangeEvent("hashchange"));
+};
+
 var FIRST_COMPONENT_HAS_MOUNTED = false;
 var gotoDefault = function gotoDefault(_) {
   if (!FIRST_COMPONENT_HAS_MOUNTED) {
-    if (!location.hash) setTimeout(navigate, 1, "/");
+    if (!location.hash) setTimeout(navigate, 1, defaultPath);
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
 };
@@ -61,7 +75,7 @@ var PathLookup = function (_React$Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       gotoDefault();
-      var path = location.hash ? transformHash(location.hash) : "/";
+      var path = location.hash ? transformHash(location.hash) : defaultPath;
       this.setState({
         params: null,
         path: path,
@@ -141,6 +155,9 @@ var Link = function Link(_ref2) {
 };
 
 exports.routePool = routePool;
+exports.getPath = getPath;
+exports.setDefault = setDefault;
+exports.refresh = refresh;
 exports.renderOnRoute = renderOnRoute;
 exports.navigate = navigate;
 exports.PathLookup = PathLookup;
