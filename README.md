@@ -1,10 +1,10 @@
-### Preact Routlet
+# Preact Routlet
 
-This package contains routing functionalities for [preact](https://github.com/developit/preact) and, now from 1.0.0 `React` applications as well. Instead of using HTML5 history API it uses the oldie `/#/what-ever` hash routing (this will change in the future).
+This package contains routing functionalities for [Preact](https://github.com/developit/preact) and, now from 1.0.0 `React` applications as well. Instead of using HTML5 history API it uses the oldie `/#/what-ever` hash routing (this will change in the future).
 
 This project was created by exploring contextual ways to define routes rather than placing all the routes in a single file.
 
-##### Usage:
+### Usage:
 
 Available imports:
 
@@ -17,14 +17,14 @@ import { renderOnRoute, navigate, RouterOutlet, PathLookup, routePool, Link } fr
 
 Either `from "preact-routlet/preact"` or `from "preact-routlet/react"`
 
-Place your RouterOutlet element somewhere in your JSX:
+Place your `RouterOutlet` element somewhere in your JSX:
 ```html
 <div>
   <RouterOutlet />
 </div>
 ```
 
-Plug `renderOnRoute` decorator on some component
+Plug the `renderOnRoute` decorator on some component
 ```javascript
 @renderOnRoute("/login")
 export default class Login extends Component<any, any> {
@@ -36,9 +36,9 @@ Remember to import your class to evaluate your component
 ```javascript
 import './components/login';
 ```
-You dont need to instantiate it or declare it. Just import on your app index.
+You dont need to instantiate or declare it. Just import it on your app index.
 
-Best practice is to group your components by domain:
+A good practice is to group your components by domain:
 
 For example imagine the following `index` file:
 
@@ -53,7 +53,7 @@ import "./domain/dashboard";
 render(<Main />, document.querySelector("#root"));
 ```
 
-Then you have some king of folder structure like this:
+Then you have some kind of folder structure like this:
 
 ```
 src/domain/
@@ -65,7 +65,7 @@ src/domain/
 └── dashboard
     └── index.tsx
 ```
-on each index you're imporing your components:
+on each `index` file you're importing your components:
 
 ```
 $ cat src/domain/access/index.tsx
@@ -76,10 +76,10 @@ import "./pages/forgot-password-page";
 
 So basically you're registering all the components that listen to route changes in your app.
 
-##### Features:
+### Features:
 
-- 404 routes:
-  If none of components are listening for some particular route
+- **404 routes**:
+  If none of the components are listening for some particular route
   ```html
     <div>
       <RouterOutlet>
@@ -109,7 +109,7 @@ So basically you're registering all the components that listen to route changes 
 ```
 - Lazy loading, Module splitting
 
-By default routes are only loaded if you evaluate classes that contain `@renderOnRoute` decorator, so simply by importing it. But you need the plugin `syntax-dynamic-import` to dynamically use the import() function with Babel.
+By default routes are only loaded if you evaluate classes that contain the `@renderOnRoute` decorator, so simply by importing it. But you need the plugin `syntax-dynamic-import` to dynamically use the import() function with Babel.
 
 ```javascript
 ...
