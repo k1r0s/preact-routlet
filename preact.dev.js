@@ -76,8 +76,8 @@ export class RouterOutlet extends PathLookup {
     });
   }
 
-  render({ children, shouldRedirect = _ => false, redirect }, { current, params, path }) {
-    const result = current ? h(current, { params, path }): children[0];
+  render({ children, shouldRedirect = _ => false, redirect }, { current, params, path, search }) {
+    const result = current ? h(current, { params, path, search }): children[0];
 
     if(shouldRedirect(path) && current) {
       navigate(redirect);

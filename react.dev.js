@@ -76,7 +76,7 @@ export class RouterOutlet extends PathLookup {
   }
 
   render() {
-    const result = this.state.current ? React.createElement(this.state.current, { params: this.state.params, path: this.state.path }): this.props.children;
+    const result = this.state.current ? React.createElement(this.state.current, { params: this.state.params, path: this.state.path, search: this.state.search }): this.props.children;
 
     if(this.props.shouldRedirect && this.props.shouldRedirect(this.state.path) && this.state.current) {
       navigate(this.props.redirect);

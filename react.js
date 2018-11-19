@@ -139,7 +139,7 @@ var RouterOutlet = function (_PathLookup) {
   }, {
     key: "render",
     value: function render() {
-      var result = this.state.current ? React.createElement(this.state.current, { params: this.state.params, path: this.state.path }) : this.props.children;
+      var result = this.state.current ? React.createElement(this.state.current, { params: this.state.params, path: this.state.path, search: this.state.search }) : this.props.children;
 
       if (this.props.shouldRedirect && this.props.shouldRedirect(this.state.path) && this.state.current) {
         navigate(this.props.redirect);

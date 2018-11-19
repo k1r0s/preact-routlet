@@ -150,9 +150,10 @@ var RouterOutlet = function (_PathLookup) {
           redirect = _ref4.redirect;
       var current = _ref5.current,
           params = _ref5.params,
-          path = _ref5.path;
+          path = _ref5.path,
+          search = _ref5.search;
 
-      var result = current ? preact.h(current, { params: params, path: path }) : children[0];
+      var result = current ? preact.h(current, { params: params, path: path, search: search }) : children[0];
 
       if (shouldRedirect(path) && current) {
         navigate(redirect);
