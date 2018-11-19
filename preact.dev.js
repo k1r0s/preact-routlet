@@ -19,7 +19,10 @@ const gotoDefault = _ => {
   }
 }
 
-const transformHash = rawHash => rawHash.split("#").pop();
+const transformHash = rawHash => {
+  const [path, qs] = rawHash.split("?");
+  return {path: path.split("#").pop(), search: qs ? `?${qs}` : ''}
+} 
 
 export function renderOnRoute(path) {
   return function(comp) {
@@ -41,7 +44,7 @@ export class PathLookup extends Component {
     const path = location.hash ? transformHash(location.hash): defaultPath;
     this.setState({
       params: null,
-      path,
+      ...path,
       current: null
     })
     this.hashChange(path);
@@ -54,7 +57,7 @@ export class PathLookup extends Component {
   }
 
   hashChange(selectedRoute) {
-    this.setState({ path: selectedRoute });
+    this.setState({ path: selectedRoute.path });
   }
 
   render({ shouldRender, children }, { path }) {
@@ -65,10 +68,10 @@ export class PathLookup extends Component {
 export class RouterOutlet extends PathLookup {
 
   hashChange(selectedRoute) {
-    const selectedMatcher = routePool.find(matcher => !!matcher.parser.test(selectedRoute));
+    const selectedMatcher = routePool.find(matcher => !!matcher.parser.test(selectedRoute.path));
     this.setState({
-      "params": selectedMatcher ? selectedMatcher.parser.test(selectedRoute): null,
-      "path": selectedRoute,
+      "params": selectedMatcher ? selectedMatcher.parser.test(selectedRoute.path): null,
+      ...selectedRoute,
       "current": selectedMatcher ? selectedMatcher.comp: null
     });
   }
