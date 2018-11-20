@@ -30,7 +30,7 @@ var getPath = function getPath() {
 };
 
 var setDefault = function setDefault(path) {
-  return defaultPath = _extends({ path: path }, defaultPath);
+  return defaultPath = _extends({}, defaultPath, { path: path });
 };
 
 var refresh = function refresh() {
