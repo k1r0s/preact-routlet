@@ -3,7 +3,7 @@ import Path from 'path-parser';
 
 export const routePool = [];
 
-let defaultPath = "/";
+let defaultPath = {path: "/", search: ""};
 
 export const getPath = () => transformHash(location.hash);
 

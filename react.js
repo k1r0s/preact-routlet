@@ -23,7 +23,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var routePool = [];
 
-var defaultPath = "/";
+var defaultPath = { path: "/", search: "" };
 
 var getPath = function getPath() {
   return transformHash(location.hash);
