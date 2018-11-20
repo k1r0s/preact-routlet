@@ -7,7 +7,7 @@ let defaultPath = {path: "/", search: ""};
 
 export const getPath = () => transformHash(location.hash);
 
-export const setDefault = path => defaultPath = path;
+export const setDefault = path => defaultPath = {path : path, ...defaultPath};
 
 export const refresh = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 
