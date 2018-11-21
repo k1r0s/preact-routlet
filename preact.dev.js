@@ -14,7 +14,7 @@ export const refresh = () => window.dispatchEvent(new HashChangeEvent("hashchang
 let FIRST_COMPONENT_HAS_MOUNTED = false;
 const gotoDefault = _ => {
   if(!FIRST_COMPONENT_HAS_MOUNTED) {
-    if(!location.hash) setTimeout(navigate, 1, defaultPath);
+    if(!location.hash) setTimeout(navigate, 1, defaultPath.path);
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
 }

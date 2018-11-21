@@ -40,7 +40,7 @@ var refresh = function refresh() {
 var FIRST_COMPONENT_HAS_MOUNTED = false;
 var gotoDefault = function gotoDefault(_) {
   if (!FIRST_COMPONENT_HAS_MOUNTED) {
-    if (!location.hash) setTimeout(navigate, 1, defaultPath);
+    if (!location.hash) setTimeout(navigate, 1, defaultPath.path);
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
 };
