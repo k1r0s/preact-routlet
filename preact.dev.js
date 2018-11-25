@@ -3,23 +3,26 @@ import Path from 'path-parser';
 
 export const routePool = [];
 
-let defaultPath = "/";
+let defaultPath = {path: "/", search: ""};
 
 export const getPath = () => transformHash(location.hash);
 
-export const setDefault = path => defaultPath = path;
+export const setDefault = path => defaultPath = { ...defaultPath, path};
 
 export const refresh = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 
 let FIRST_COMPONENT_HAS_MOUNTED = false;
 const gotoDefault = _ => {
   if(!FIRST_COMPONENT_HAS_MOUNTED) {
-    if(!location.hash) setTimeout(navigate, 1, defaultPath);
+    if(!location.hash) setTimeout(navigate, 1, defaultPath.path);
     FIRST_COMPONENT_HAS_MOUNTED = true;
   }
 }
 
-const transformHash = rawHash => rawHash.split("#").pop();
+const transformHash = rawHash => {
+  const [path, qs] = rawHash.split("?");
+  return {path: path.split("#").pop(), search: qs ? `?${qs}` : ''}
+} 
 
 export function renderOnRoute(path) {
   return function(comp) {
@@ -41,7 +44,7 @@ export class PathLookup extends Component {
     const path = location.hash ? transformHash(location.hash): defaultPath;
     this.setState({
       params: null,
-      path,
+      ...path,
       current: null
     })
     this.hashChange(path);
@@ -54,7 +57,7 @@ export class PathLookup extends Component {
   }
 
   hashChange(selectedRoute) {
-    this.setState({ path: selectedRoute });
+    this.setState({ path: selectedRoute.path });
   }
 
   render({ shouldRender, children }, { path }) {
@@ -65,16 +68,16 @@ export class PathLookup extends Component {
 export class RouterOutlet extends PathLookup {
 
   hashChange(selectedRoute) {
-    const selectedMatcher = routePool.find(matcher => !!matcher.parser.test(selectedRoute));
+    const selectedMatcher = routePool.find(matcher => !!matcher.parser.test(selectedRoute.path));
     this.setState({
-      "params": selectedMatcher ? selectedMatcher.parser.test(selectedRoute): null,
-      "path": selectedRoute,
+      "params": selectedMatcher ? selectedMatcher.parser.test(selectedRoute.path): null,
+      ...selectedRoute,
       "current": selectedMatcher ? selectedMatcher.comp: null
     });
   }
 
-  render({ children, shouldRedirect = _ => false, redirect }, { current, params, path }) {
-    const result = current ? h(current, { params, path }): children[0];
+  render({ children, shouldRedirect = _ => false, redirect }, { current, params, path, search }) {
+    const result = current ? h(current, { params, path, search }): children[0];
 
     if(shouldRedirect(path) && current) {
       navigate(redirect);
